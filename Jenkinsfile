@@ -5,15 +5,15 @@ pipeline {
         stage('Build') {
             steps {
                 withMaven(maven : 'apache-maven-3.8.6') {
-                                bat 'mvn clean install'
+                                sh 'mvn clean install'
                  }
             }
         }
 
         stage('Run') {
             steps {
-                bat 'docker images'
-                bat 'docker run -t helloworld:1.0'
+                sh 'docker images'
+                sh 'docker run -t helloworld:1.0'
             }
         }
     }
