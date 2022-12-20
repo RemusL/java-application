@@ -21,11 +21,13 @@ pipeline {
 //                 sh 'docker run -t helloworld:1.0'
 //             }
         }
-        withCredentials([sshUserPrivateKey(credentialsId: 'webUser', keyFileVariable: 'identity', usernameVariable: 'userName')]) {
-            remote.user = userName
-            remote.identityFile = identity
-            stage("Deploy") {
-                sshCommand remote: remote, command: 'pwd'
+        stage("Deploy") {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'webUser', keyFileVariable: 'identity', usernameVariable: 'userName')]) {
+                    remote.user = userName
+                    remote.identityFile = identity
+                    sshCommand remote: remote, command: 'pwd'
+                }
             }
         }
     }
